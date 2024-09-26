@@ -1714,7 +1714,7 @@ final class MutatingScope implements Scope
 				return new MixedType();
 			}
 
-			$returnType = ParametersAcceptorSelector::selectSingle($functionReflection->getVariants())->getReturnType();
+			$returnType = $functionReflection->getOnlyVariant()->getReturnType();
 			$generatorSendType = $returnType->getTemplateType(Generator::class, 'TSend');
 			if ($generatorSendType instanceof ErrorType) {
 				return new MixedType();
@@ -3132,7 +3132,7 @@ final class MutatingScope implements Scope
 		bool $preserveThis,
 	): self
 	{
-		$acceptor = ParametersAcceptorSelector::selectSingle($functionReflection->getVariants());
+		$acceptor = $functionReflection->getOnlyVariant();
 		$parametersByName = [];
 
 		foreach ($acceptor->getParameters() as $parameter) {
@@ -5508,7 +5508,7 @@ final class MutatingScope implements Scope
 
 		$assignedToProperty = $node->getAttribute(NewAssignedToPropertyVisitor::ATTRIBUTE_NAME);
 		if ($assignedToProperty !== null) {
-			$constructorVariant = ParametersAcceptorSelector::selectSingle($constructorMethod->getVariants());
+			$constructorVariant = $constructorMethod->getOnlyVariant();
 			$classTemplateTypes = $classReflection->getTemplateTypeMap()->getTypes();
 			$originalClassTemplateTypes = $classTemplateTypes;
 			foreach ($constructorVariant->getParameters() as $parameter) {

@@ -22,7 +22,6 @@ use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Reflection\ParameterReflection;
 use PHPStan\Reflection\ParameterReflectionWithPhpDocs;
 use PHPStan\Reflection\ParametersAcceptor;
-use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Reflection\ParametersAcceptorWithPhpDocs;
 use PHPStan\Reflection\Php\PhpMethodFromParserNodeReflection;
 use PHPStan\Reflection\ReflectionProvider;
@@ -73,10 +72,8 @@ final class FunctionDefinitionCheck
 		string $unresolvableReturnTypeMessage,
 	): array
 	{
-		$parametersAcceptor = ParametersAcceptorSelector::selectSingle($functionReflection->getVariants());
-
 		return $this->checkParametersAcceptor(
-			$parametersAcceptor,
+			$functionReflection->getOnlyVariant(),
 			$function,
 			$parameterMessage,
 			$returnMessage,
@@ -258,11 +255,8 @@ final class FunctionDefinitionCheck
 		string $selfOutMessage,
 	): array
 	{
-		/** @var ParametersAcceptorWithPhpDocs $parametersAcceptor */
-		$parametersAcceptor = ParametersAcceptorSelector::selectSingle($methodReflection->getVariants());
-
 		$errors = $this->checkParametersAcceptor(
-			$parametersAcceptor,
+			$methodReflection->getOnlyVariant(),
 			$methodNode,
 			$parameterMessage,
 			$returnMessage,

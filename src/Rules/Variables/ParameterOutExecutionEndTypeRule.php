@@ -9,7 +9,6 @@ use PHPStan\Node\Expr\ParameterVariableOriginalValueExpr;
 use PHPStan\Reflection\ExtendedMethodReflection;
 use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Reflection\ParameterReflectionWithPhpDocs;
-use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
@@ -58,7 +57,7 @@ final class ParameterOutExecutionEndTypeRule implements Rule
 			}
 		}
 
-		$variant = ParametersAcceptorSelector::selectSingle($inFunction->getVariants());
+		$variant = $inFunction->getOnlyVariant();
 		$parameters = $variant->getParameters();
 		$errors = [];
 		foreach ($parameters as $parameter) {

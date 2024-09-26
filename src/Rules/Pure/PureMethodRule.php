@@ -5,7 +5,6 @@ namespace PHPStan\Rules\Pure;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\MethodReturnStatementsNode;
-use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Rules\Rule;
 use function sprintf;
 
@@ -27,7 +26,7 @@ final class PureMethodRule implements Rule
 	public function processNode(Node $node, Scope $scope): array
 	{
 		$method = $node->getMethodReflection();
-		$variant = ParametersAcceptorSelector::selectSingle($method->getVariants());
+		$variant = $method->getOnlyVariant();
 
 		return $this->check->check(
 			sprintf('Method %s::%s()', $method->getDeclaringClass()->getDisplayName(), $method->getName()),

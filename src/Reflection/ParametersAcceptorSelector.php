@@ -266,7 +266,7 @@ class ParametersAcceptorSelector
 					if ((new ObjectType(Closure::class))->isSuperTypeOf($varType)->yes()) {
 						$inFunction = $scope->getFunction();
 						if ($inFunction !== null) {
-							$inFunctionVariant = self::selectSingle($inFunction->getVariants());
+							$inFunctionVariant = $inFunction->getOnlyVariant();
 							$closureThisParameters = [];
 							foreach ($inFunctionVariant->getParameters() as $parameter) {
 								if ($parameter->getClosureThisType() === null) {
@@ -310,7 +310,7 @@ class ParametersAcceptorSelector
 					$closureVarName = $args[0]->value->name;
 					$inFunction = $scope->getFunction();
 					if ($inFunction !== null) {
-						$inFunctionVariant = self::selectSingle($inFunction->getVariants());
+						$inFunctionVariant = $inFunction->getOnlyVariant();
 						$closureThisParameters = [];
 						foreach ($inFunctionVariant->getParameters() as $parameter) {
 							if ($parameter->getClosureThisType() === null) {

@@ -11,7 +11,6 @@ use PHPStan\Reflection\ExtendedMethodReflection;
 use PHPStan\Reflection\FunctionVariantWithPhpDocs;
 use PHPStan\Reflection\MethodPrototypeReflection;
 use PHPStan\Reflection\Native\NativeMethodReflection;
-use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Reflection\Php\NativeBuiltinMethodReflection;
 use PHPStan\Reflection\Php\PhpClassReflectionExtension;
 use PHPStan\Reflection\Php\PhpMethodReflection;
@@ -202,7 +201,7 @@ final class OverridingMethodRule implements Rule
 
 		$prototypeVariant = $prototypeVariants[0];
 
-		$methodVariant = ParametersAcceptorSelector::selectSingle($method->getVariants());
+		$methodVariant = $method->getOnlyVariant();
 		$methodReturnType = $methodVariant->getNativeReturnType();
 
 		$realPrototype = $method->getPrototype();
